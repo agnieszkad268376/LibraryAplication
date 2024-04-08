@@ -42,4 +42,10 @@ public class AuthController {
     public RegisterResponseDTO showUser(@PathVariable long id){
         return authService.showUser(id);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> delete(@PathVariable long id) {
+        authService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

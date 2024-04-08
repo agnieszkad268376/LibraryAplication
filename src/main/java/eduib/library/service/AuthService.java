@@ -60,7 +60,13 @@ public class AuthService {
         return new RegisterResponseDTO(user.getId(), user.getUserName(), user.getRole());
     }
 
-    
+    public void delete(long id){
+        if(!authRepository.existsById(id)) {
+            throw new RuntimeException();
+        } else {
+            authRepository.deleteById(id);
+        }
+    }
 
 
 }
