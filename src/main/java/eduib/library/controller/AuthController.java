@@ -37,4 +37,9 @@ public class AuthController {
     public List<RegisterResponseDTO> showUsers(){
         return authService.showUsers();
     }
+
+    @GetMapping("/showUser/{id}")
+    public RegisterResponseDTO showUser(@PathVariable long id){
+        return authService.showUser(id);
+    }
 }

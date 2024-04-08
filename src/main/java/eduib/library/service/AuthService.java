@@ -55,5 +55,12 @@ public class AuthService {
                 .collect(Collectors.toList());
     }
 
+    public RegisterResponseDTO showUser(long id){
+        var user = authRepository.findById(id).orElseThrow(RuntimeException::new);
+        return new RegisterResponseDTO(user.getId(), user.getUserName(), user.getRole());
+    }
+
+    
+
 
 }
