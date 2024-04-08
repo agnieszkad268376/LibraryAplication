@@ -47,8 +47,8 @@ public class BookService {
                 book.getAvailableCopies());
     }
 
-    public void delete(long id){
-        if(bookRepository.existsById(id)) {
+    public void delete(long id) {
+        if (bookRepository.existsById(id)) {
             bookRepository.deleteById(id);
         } else {
             throw new RuntimeException();

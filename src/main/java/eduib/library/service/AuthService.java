@@ -1,6 +1,8 @@
 package eduib.library.service;
 
+import eduib.library.commonTypes.UserRole;
 import eduib.library.controller.DTO.LoginDTO;
+import eduib.library.controller.DTO.LoginResponseDTO;
 import eduib.library.controller.DTO.RegisterDTO;
 import eduib.library.controller.DTO.RegisterResponseDTO;
 import eduib.library.entity.AuthEntity;
@@ -18,11 +20,13 @@ import java.util.stream.Collectors;
 public class AuthService {
     private final AuthRepository authRepository;
     private final UserRepository userRepository;
+    private final JWTService jwtService;
 
     @Autowired
-    public AuthService(AuthRepository authRepository, UserRepository userRepository) {
+    public AuthService(AuthRepository authRepository, UserRepository userRepository, JWTService jwtService) {
         this.authRepository = authRepository;
         this.userRepository = userRepository;
+        this.jwtService = jwtService;
     }
 
     public RegisterResponseDTO register(RegisterDTO registerDTO){
@@ -41,12 +45,17 @@ public class AuthService {
         return new RegisterResponseDTO(createdAuth.getId(), createdAuth.getUserName(), createdAuth.getRole());
     }
 
-    public void login(LoginDTO loginDTO) {
+    public LoginResponseDTO login(LoginDTO loginDTO) {
         AuthEntity authEntity = authRepository.findByUserName(loginDTO.getUserName())
                 .orElseThrow(RuntimeException::new);
+
         if (!authEntity.getPassword().equals(loginDTO.getPassword())) {
             throw new RuntimeException();
         }
+
+        String token = jwtService.generateToken(authEntity);
+
+        return new LoginResponseDTO(token);
     }
 
     public List<RegisterResponseDTO> showUsers(){
