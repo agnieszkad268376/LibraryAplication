@@ -10,6 +10,9 @@ import eduib.library.entity.UserEntity;
 import eduib.library.repositories.AuthRepository;
 import eduib.library.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,12 +24,16 @@ public class AuthService {
     private final AuthRepository authRepository;
     private final UserRepository userRepository;
     private final JWTService jwtService;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
 
     @Autowired
-    public AuthService(AuthRepository authRepository, UserRepository userRepository, JWTService jwtService) {
+    public AuthService(AuthRepository authRepository, UserRepository userRepository, JWTService jwtService, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
         this.authRepository = authRepository;
         this.userRepository = userRepository;
         this.jwtService = jwtService;
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
     }
 
     public RegisterResponseDTO register(RegisterDTO registerDTO){
@@ -37,7 +44,7 @@ public class AuthService {
 
         AuthEntity authEntity = new AuthEntity();
         authEntity.setUserName(registerDTO.getUserName());
-        authEntity.setPassword(registerDTO.getPassword());
+        authEntity.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
         authEntity.setRole(registerDTO.getRole());
         authEntity.setUser(createUser);
 
@@ -49,9 +56,11 @@ public class AuthService {
         AuthEntity authEntity = authRepository.findByUserName(loginDTO.getUserName())
                 .orElseThrow(RuntimeException::new);
 
-        if (!authEntity.getPassword().equals(loginDTO.getPassword())) {
+        String pass = passwordEncoder.encode(loginDTO.getPassword());
+        if (!passwordEncoder.matches(loginDTO.getPassword(), authEntity.getPassword())) {
             throw new RuntimeException();
         }
+
 
         String token = jwtService.generateToken(authEntity);
 
