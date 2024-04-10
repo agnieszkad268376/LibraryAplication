@@ -37,16 +37,19 @@ public class AuthController {
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('LIBRARIAN')")
     @GetMapping("/show")
     public List<RegisterResponseDTO> showUsers(){
         return authService.showUsers();
     }
 
+    @PreAuthorize("hasRole('LIBRARIAN')")
     @GetMapping("/showUser/{id}")
     public RegisterResponseDTO showUser(@PathVariable long id){
         return authService.showUser(id);
     }
 
+    @PreAuthorize("hasRole('LIBRARIAN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id) {
         authService.delete(id);
