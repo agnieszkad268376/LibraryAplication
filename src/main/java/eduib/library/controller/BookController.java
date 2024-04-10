@@ -47,36 +47,42 @@ public class BookController {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasRole('LIBRARIAN')")
     @PostMapping("/updateISBN/{bookId}/{newISBN}")
     public GetBookDTO updateISBN(@PathVariable long bookId, @PathVariable String newISBN){
         bookService.updateISBN(bookId, newISBN);
         return bookService.getOne(bookId);
     }
 
+    @PreAuthorize("hasRole('LIBRARIAN')")
     @PostMapping("/updateTitle/{bookId}/{newTitle}")
     public GetBookDTO updateTitle(@PathVariable long bookId, @PathVariable String newTitle){
         bookService.updateTitle(bookId, newTitle);
         return bookService.getOne(bookId);
     }
 
+    @PreAuthorize("hasRole('LIBRARIAN')")
     @PostMapping("/updateAuthor/{bookId}/{newAuthor}")
     public GetBookDTO updateAuthor(@PathVariable long bookId, @PathVariable String newAuthor){
         bookService.updateAuthor(bookId, newAuthor);
         return bookService.getOne(bookId);
     }
 
+    @PreAuthorize("hasRole('LIBRARIAN')")
     @PostMapping("/updatePublisher/{bookId}/{newPublisher}")
     public GetBookDTO updatePublisher(@PathVariable long bookId, @PathVariable String newPublisher){
         bookService.updatePublisher(bookId, newPublisher);
         return bookService.getOne(bookId);
     }
 
+    @PreAuthorize("hasRole('LIBRARIAN')")
     @PostMapping("/updatePublishYear/{bookId}/{newPublishYear}")
     public GetBookDTO updatePublishYear(@PathVariable long bookId, @PathVariable int newPublishYear){
         bookService.updatePublishYear(bookId, newPublishYear);
         return bookService.getOne(bookId);
     }
 
+    @PreAuthorize("hasRole('LIBRARIAN')")
     @PostMapping("/updateAvailableCopies/{bookId}/{newAvailableCopies}")
     public GetBookDTO updateAvailableCopies(@PathVariable long bookId, @PathVariable String newAvailableCopies){
         bookService.updateAvailableCopies(bookId, newAvailableCopies);
