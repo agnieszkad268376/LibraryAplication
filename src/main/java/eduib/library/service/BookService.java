@@ -7,6 +7,7 @@ import eduib.library.entity.BookEntity;
 import eduib.library.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,5 +54,59 @@ public class BookService {
         } else {
             throw new RuntimeException();
         }
+    }
+
+    public GetBookDTO updateISBN(long bookId, String newISBN){
+        var book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
+        book.setISBN(newISBN);
+        var updateBook = bookRepository.save(book);
+        return new GetBookDTO(updateBook.getBookId(), updateBook.getISBN(),
+                updateBook.getTitle(), updateBook.getAuthor(), updateBook.getPublisher(), updateBook.getPublishYear(),
+                updateBook.getAvailableCopies());
+    }
+
+    public GetBookDTO updateTitle(long bookId, String newTitle){
+        var book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
+        book.setTitle(newTitle);
+        var updateBook = bookRepository.save(book);
+        return new GetBookDTO(updateBook.getBookId(), updateBook.getISBN(),
+                updateBook.getTitle(), updateBook.getAuthor(), updateBook.getPublisher(), updateBook.getPublishYear(),
+                updateBook.getAvailableCopies());
+    }
+
+    public GetBookDTO updateAuthor(long bookId, String newAuthor){
+        var book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
+        book.setAuthor(newAuthor);
+        var updateBook = bookRepository.save(book);
+        return new GetBookDTO(updateBook.getBookId(), updateBook.getISBN(),
+                updateBook.getTitle(), updateBook.getAuthor(), updateBook.getPublisher(), updateBook.getPublishYear(),
+                updateBook.getAvailableCopies());
+    }
+
+    public GetBookDTO updatePublisher(long bookId, String newPublisher){
+        var book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
+        book.setPublisher(newPublisher);
+        var updateBook = bookRepository.save(book);
+        return new GetBookDTO(updateBook.getBookId(), updateBook.getISBN(),
+                updateBook.getTitle(), updateBook.getAuthor(), updateBook.getPublisher(), updateBook.getPublishYear(),
+                updateBook.getAvailableCopies());
+    }
+
+    public GetBookDTO updatePublishYear(long bookId, int newPublishYear){
+        var book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
+        book.setPublishYear(newPublishYear);
+        var updateBook = bookRepository.save(book);
+        return new GetBookDTO(updateBook.getBookId(), updateBook.getISBN(),
+                updateBook.getTitle(), updateBook.getAuthor(), updateBook.getPublisher(), updateBook.getPublishYear(),
+                updateBook.getAvailableCopies());
+    }
+
+    public GetBookDTO updateAvailableCopies(long bookId, String newAvailableCopies){
+        var book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
+        book.setAvailableCopies(newAvailableCopies);
+        var updateBook = bookRepository.save(book);
+        return new GetBookDTO(updateBook.getBookId(), updateBook.getISBN(),
+                updateBook.getTitle(), updateBook.getAuthor(), updateBook.getPublisher(), updateBook.getPublishYear(),
+                updateBook.getAvailableCopies());
     }
 }

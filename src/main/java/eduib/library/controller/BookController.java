@@ -6,6 +6,7 @@ import eduib.library.controller.DTO.GetBookDTO;
 import eduib.library.service.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,26 +21,66 @@ public class BookController {
         this.bookService = bookService;
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/getAllBooks")
     public List<GetBookDTO> getAllBooks(){
         return bookService.getAll();
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/getById/{id}")
     public GetBookDTO getById(@PathVariable long id){
         return bookService.getOne(id);
     }
 
-    // Requestbody, żeby podać jsosa zawierącego dane książki do metody
+    @PreAuthorize("hasRole('LIBRARIAN')")
     @PostMapping("/add")
     public ResponseEntity<AddBookResponseDTO> add(@RequestBody AddBookDTO book){
         var newBook =  bookService.add(book);
         return new ResponseEntity<>(newBook, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('LIBRARIAN')")
     @DeleteMapping("delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id){
         bookService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/updateISBN/{bookId}/{newISBN}")
+    public GetBookDTO updateISBN(@PathVariable long bookId, @PathVariable String newISBN){
+        bookService.updateISBN(bookId, newISBN);
+        return bookService.getOne(bookId);
+    }
+
+    @PostMapping("/updateTitle/{bookId}/{newTitle}")
+    public GetBookDTO updateTitle(@PathVariable long bookId, @PathVariable String newTitle){
+        bookService.updateTitle(bookId, newTitle);
+        return bookService.getOne(bookId);
+    }
+
+    @PostMapping("/updateAuthor/{bookId}/{newAuthor}")
+    public GetBookDTO updateAuthor(@PathVariable long bookId, @PathVariable String newAuthor){
+        bookService.updateAuthor(bookId, newAuthor);
+        return bookService.getOne(bookId);
+    }
+
+    @PostMapping("/updatePublisher/{bookId}/{newPublisher}")
+    public GetBookDTO updatePublisher(@PathVariable long bookId, @PathVariable String newPublisher){
+        bookService.updatePublisher(bookId, newPublisher);
+        return bookService.getOne(bookId);
+    }
+
+    @PostMapping("/updatePublishYear/{bookId}/{newPublishYear}")
+    public GetBookDTO updatePublishYear(@PathVariable long bookId, @PathVariable int newPublishYear){
+        bookService.updatePublishYear(bookId, newPublishYear);
+        return bookService.getOne(bookId);
+    }
+
+    @PostMapping("/updateAvailableCopies/{bookId}/{newAvailableCopies}")
+    public GetBookDTO updateAvailableCopies(@PathVariable long bookId, @PathVariable String newAvailableCopies){
+        bookService.updateAvailableCopies(bookId, newAvailableCopies);
+        return bookService.getOne(bookId);
+    }
+
 }
