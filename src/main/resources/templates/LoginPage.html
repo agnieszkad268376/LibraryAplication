@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Pliki CSS Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Pliki JavaScript Bootstrap (zależności) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <style>
+        body {
+            height: 100vh;
+            background: linear-gradient(to bottom, rgba(241, 43, 127, 0.78), #5c5dbd);
+            font-family: Arial, sans-serif;
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed; /* Żeby było na górze strony */
+            top: 0;
+            width: 100%; /* Dopasowanie szerokości do okna przeglądarki */
+            background-color: rgba(255, 255, 255, 0.76);
+        }
+
+        /* żeby inne elementy nie nachodizły na navbar */
+        .content {
+            margin-top: 70px;
+            padding: 20px;
+        }
+
+        .login-form {
+            max-width: 300px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .login-form label {
+            font-weight: bold;
+        }
+
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: medium;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        /* Styl przcisków */
+        .login-form input[type="submit"] {
+            width: 100%;
+            background-color: #F12B7FC6; /
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Zmieana koloru jak się najedzie kursorem na przycisk */
+        .login-form input[type="submit"]:hover {
+            background-color: #5c5dbd; /* Niebieski kolor tła przycisku po najechaniu myszką */
+        }
+    </style>
+</head>
+<body>
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg bg-light" data-bs-theme="light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Library</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor03">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Home</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">About us</a>
+                    <a class="dropdown-item" href="#">Open hours</a>
+                </div>
+            </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Galery
+                        <span class="visually-hidden">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Contact
+                        <span class="visually-hidden">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Donate
+                        <span class="visually-hidden">(current)</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- logowanie -->
+<div class="content">
+    <div class="login-form">
+        <form action="#" method="post">
+            <label for="fname">Login</label><br>
+            <input type="text" id="fname" name="fname" value="John"><br><br>
+            <label for="lname">Password</label><br>
+            <input type="password" id="lname" name="lname" value="Doe"><br>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#" class="btn">Forgot password?</a></li>
+            </ol>
+            <input type="submit" value="Log in"><br><br>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

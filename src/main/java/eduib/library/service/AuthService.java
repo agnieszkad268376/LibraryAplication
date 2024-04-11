@@ -1,10 +1,7 @@
 package eduib.library.service;
 
 import eduib.library.commonTypes.UserRole;
-import eduib.library.controller.DTO.LoginDTO;
-import eduib.library.controller.DTO.LoginResponseDTO;
-import eduib.library.controller.DTO.RegisterDTO;
-import eduib.library.controller.DTO.RegisterResponseDTO;
+import eduib.library.controller.DTO.*;
 import eduib.library.entity.AuthEntity;
 import eduib.library.entity.UserEntity;
 import eduib.library.repositories.AuthRepository;
@@ -83,8 +80,27 @@ public class AuthService {
             throw new RuntimeException();
         } else {
             authRepository.deleteById(id);
+            userRepository.deleteById(id);
         }
     }
 
+    public RegisterResponseDTO updateUserName(long userId, String newUserName) {
+        var auth = authRepository.findById(userId).orElseThrow(() -> new RuntimeException("Book not found"));
+        auth.setUserName(newUserName);
+        var updateUser = authRepository.save(auth);
+        return new RegisterResponseDTO(updateUser.getId(), updateUser.getUserName(), updateUser.getRole());
+    }
+
+    public void updateEmail(long userId, String newEmail){
+        var user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("Book not found"));
+        user.setEmail(newEmail);
+        userRepository.save(user);
+    }
+
+    public void changePassword(long userId, String newPassword){
+        var auth = authRepository.findById(userId).orElseThrow(() -> new RuntimeException("Book not found"));
+        auth.setPassword(newPassword);
+         authRepository.save(auth);
+    }
 
 }
