@@ -1,18 +1,19 @@
 package eduib.library.service;
 
-import eduib.library.commonTypes.UserRole;
 import eduib.library.controller.DTO.*;
 import eduib.library.entity.AuthEntity;
 import eduib.library.entity.UserEntity;
+import eduib.library.errors.UserAlreadyExistsException;
+import eduib.library.errors.WrongPasswordException;
 import eduib.library.repositories.AuthRepository;
 import eduib.library.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -34,6 +35,12 @@ public class AuthService {
     }
 
     public RegisterResponseDTO register(RegisterDTO registerDTO){
+
+        Optional<AuthEntity> isUserExists = authRepository.findByUserName(registerDTO.getUserName());
+        if (isUserExists.isPresent()){
+            throw new UserAlreadyExistsException(null);
+        }
+
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(registerDTO.getEmail());
         userEntity.setFullUserName(registerDTO.getUserName());
@@ -55,7 +62,7 @@ public class AuthService {
 
         String pass = passwordEncoder.encode(loginDTO.getPassword());
         if (!passwordEncoder.matches(loginDTO.getPassword(), authEntity.getPassword())) {
-            throw new RuntimeException();
+            throw new WrongPasswordException("Złe hasło");
         }
 
         String token = jwtService.generateToken(authEntity);
