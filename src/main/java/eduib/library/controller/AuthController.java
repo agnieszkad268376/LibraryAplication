@@ -32,7 +32,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @PreAuthorize("permitAll()")
-    public ResponseEntity<LoginResponseDTO> register(@RequestBody LoginDTO requestBody){
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginDTO requestBody){
         LoginResponseDTO dto = authService.login(requestBody);
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
@@ -49,7 +49,7 @@ public class AuthController {
         return authService.showUser(id);
     }
 
-    @PreAuthorize("hasRole('LIBRARIAN')")
+    @PreAuthorize("permitAll()")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id) {
         authService.delete(id);
@@ -57,21 +57,21 @@ public class AuthController {
     }
 
     @PreAuthorize("hasRole('LIBRARIAN')")
-    @PostMapping
+    @PostMapping("/updateUserName/{userId}/{newUserName}")
     public RegisterResponseDTO updateUserName(@PathVariable long userId, @PathVariable String newUserName){
         authService.updateUserName(userId, newUserName);
         return authService.showUser(userId);
     }
 
     @PreAuthorize("hasRole('LIBRARIAN')")
-    @PostMapping
+    @PostMapping("/updateEmail/{userId}/{newEmail}")
     public ResponseEntity<Void> updateEmail(@PathVariable long userId, @PathVariable String newEmail){
         authService.updateEmail(userId, newEmail);
         return ResponseEntity.noContent().build();
     }
 
     @PreAuthorize("hasRole('LIBRARIAN')")
-    @PostMapping
+    @PostMapping("/updateUserName/{userId}/{newPassword}")
     public ResponseEntity<Void> changePassword(@PathVariable long userId, @PathVariable String newPassword){
         authService.changePassword(userId, newPassword);
         return ResponseEntity.noContent().build();

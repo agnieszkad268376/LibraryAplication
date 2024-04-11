@@ -58,7 +58,6 @@ public class AuthService {
             throw new RuntimeException();
         }
 
-
         String token = jwtService.generateToken(authEntity);
 
         return new LoginResponseDTO(token);
