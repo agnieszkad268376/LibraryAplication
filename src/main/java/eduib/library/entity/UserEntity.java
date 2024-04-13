@@ -2,6 +2,8 @@ package eduib.library.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users", schema = "libraryDataBase")
 public class UserEntity {
@@ -23,8 +25,8 @@ public class UserEntity {
     @Column(name = "fullUserName")
     private String fullUserName;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private AuthEntity auth;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<LoanEntity> loans;
 
     public long getId() {
         return id;
@@ -58,11 +60,11 @@ public class UserEntity {
         this.fullUserName = fullUserName;
     }
 
-    public AuthEntity getAuth() {
-        return auth;
+    public List<LoanEntity> getLoans() {
+        return loans;
     }
 
-    public void setAuth(AuthEntity auth) {
-        this.auth = auth;
+    public void setLoans(List<LoanEntity> loans) {
+        this.loans = loans;
     }
 }

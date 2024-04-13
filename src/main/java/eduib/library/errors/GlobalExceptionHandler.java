@@ -17,9 +17,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> WrongPasswordException(WrongPasswordException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body("Wrong username or password");
     }
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleOtherExceptions(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong");
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<String> handleOtherExceptions(Exception ex) {
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong");
+//    }
 
 }

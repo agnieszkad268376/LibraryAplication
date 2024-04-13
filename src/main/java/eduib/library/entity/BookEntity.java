@@ -1,6 +1,8 @@
 package eduib.library.entity;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "books", schema = "libraryDataBase")
 public class BookEntity {
@@ -33,6 +35,9 @@ public class BookEntity {
     @Basic
     @Column(name = "availableCopies")
     private String availableCopies;
+
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+    private List<LoanEntity> loans;
 
     public long getBookId() {
         return id;
@@ -88,5 +93,13 @@ public class BookEntity {
 
     public void setAvailableCopies(String availableCopies) {
         this.availableCopies = availableCopies;
+    }
+
+    public List<LoanEntity> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(List<LoanEntity> loans) {
+        this.loans = loans;
     }
 }
