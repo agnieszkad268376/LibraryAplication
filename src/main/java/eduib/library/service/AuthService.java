@@ -42,6 +42,7 @@ public class AuthService {
         }
 
         UserEntity userEntity = new UserEntity();
+        userEntity.setUserName(registerDTO.getUserName());
         userEntity.setEmail(registerDTO.getEmail());
         userEntity.setFullUserName(registerDTO.getUserName());
         UserEntity createUser = userRepository.save(userEntity);
