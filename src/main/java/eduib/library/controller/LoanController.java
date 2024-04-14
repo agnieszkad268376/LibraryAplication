@@ -7,6 +7,7 @@ import eduib.library.controller.DTO.LoanResponseDTO;
 import eduib.library.service.LoanService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class LoanController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('LIBRARIAN')")
     public ResponseEntity<LoanResponseDTO> add(@RequestBody AddLoanDTO loanDTO) {
         var newLoan = loanService.add(loanDTO);
         return new ResponseEntity<>(newLoan, HttpStatus.CREATED);

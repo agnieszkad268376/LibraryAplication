@@ -7,7 +7,7 @@ import eduib.library.entity.UserEntity;
 import eduib.library.repositories.AuthRepository;
 import eduib.library.repositories.BookRepository;
 import eduib.library.repositories.LoanRepository;
-import eduib.library.repositories.UserRepository;\
+import eduib.library.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
