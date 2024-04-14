@@ -3,7 +3,9 @@ package eduib.library.service;
 import eduib.library.controller.DTO.*;
 import eduib.library.entity.AuthEntity;
 import eduib.library.entity.UserEntity;
+import eduib.library.errors.BookDoesntExistsException;
 import eduib.library.errors.UserAlreadyExistsException;
+import eduib.library.errors.UserDoesntExistsException;
 import eduib.library.errors.WrongPasswordException;
 import eduib.library.repositories.AuthRepository;
 import eduib.library.repositories.UserRepository;
@@ -59,11 +61,11 @@ public class AuthService {
 
     public LoginResponseDTO login(LoginDTO loginDTO) {
         AuthEntity authEntity = authRepository.findByUserName(loginDTO.getUserName())
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(() -> new UserDoesntExistsException(null));
 
         String pass = passwordEncoder.encode(loginDTO.getPassword());
         if (!passwordEncoder.matches(loginDTO.getPassword(), authEntity.getPassword())) {
-            throw new WrongPasswordException("Złe hasło");
+            throw new WrongPasswordException("Wrong password");
         }
 
         String token = jwtService.generateToken(authEntity);
@@ -78,13 +80,13 @@ public class AuthService {
     }
 
     public RegisterResponseDTO showUser(long id){
-        var user = authRepository.findById(id).orElseThrow(RuntimeException::new);
+        var user = authRepository.findById(id).orElseThrow(() -> new UserDoesntExistsException(null));
         return new RegisterResponseDTO(user.getId(), user.getUserName(), user.getRole());
     }
 
     public void delete(long id){
         if(!authRepository.existsById(id)) {
-            throw new RuntimeException();
+            throw new UserDoesntExistsException(null);
         } else {
             authRepository.deleteById(id);
             userRepository.deleteById(id);
@@ -92,20 +94,20 @@ public class AuthService {
     }
 
     public RegisterResponseDTO updateUserName(long userId, String newUserName) {
-        var auth = authRepository.findById(userId).orElseThrow(() -> new RuntimeException("Book not found"));
+        var auth = authRepository.findById(userId).orElseThrow(() -> new UserAlreadyExistsException(null));
         auth.setUserName(newUserName);
         var updateUser = authRepository.save(auth);
         return new RegisterResponseDTO(updateUser.getId(), updateUser.getUserName(), updateUser.getRole());
     }
 
     public void updateEmail(long userId, String newEmail){
-        var user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("Book not found"));
+        var user = userRepository.findById(userId).orElseThrow(() -> new UserAlreadyExistsException("Book not found"));
         user.setEmail(newEmail);
         userRepository.save(user);
     }
 
     public void changePassword(long userId, String newPassword){
-        var auth = authRepository.findById(userId).orElseThrow(() -> new RuntimeException("Book not found"));
+        var auth = authRepository.findById(userId).orElseThrow(() -> new UserAlreadyExistsException("Book not found"));
         auth.setPassword(newPassword);
          authRepository.save(auth);
     }

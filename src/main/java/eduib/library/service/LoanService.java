@@ -4,6 +4,9 @@ import eduib.library.controller.DTO.*;
 import eduib.library.entity.BookEntity;
 import eduib.library.entity.LoanEntity;
 import eduib.library.entity.UserEntity;
+import eduib.library.errors.BookDoesntExistsException;
+import eduib.library.errors.LoanDoesntExistsException;
+import eduib.library.errors.UserDoesntExistsException;
 import eduib.library.repositories.AuthRepository;
 import eduib.library.repositories.BookRepository;
 import eduib.library.repositories.LoanRepository;
@@ -34,8 +37,10 @@ public class LoanService extends IndentityService{
 
     public LoanResponseDTO add(AddLoanDTO loanDTO) {
 
-        UserEntity user = userRepository.findById(loanDTO.getUserId()).orElseThrow(RuntimeException::new);
-        BookEntity book = bookRepository.findById(loanDTO.getBookId()).orElseThrow(RuntimeException::new);
+        UserEntity user = userRepository.findById(loanDTO.getUserId())
+                .orElseThrow(() -> new UserDoesntExistsException(null));
+        BookEntity book = bookRepository.findById(loanDTO.getBookId())
+                .orElseThrow(() -> new BookDoesntExistsException(null));
 
         LoanEntity loanEntity = new LoanEntity();
         loanEntity.setBook(book);
@@ -50,7 +55,7 @@ public class LoanService extends IndentityService{
 
     @PostAuthorize("hasRole('LIBRARIAN') or this.indentify(authentication.name, #userId)")
     public GetLoanDTO getById(long id){
-        LoanEntity loanEntity = loanRepository.findById(id).orElseThrow(RuntimeException::new);
+        LoanEntity loanEntity = loanRepository.findById(id).orElseThrow(()-> new LoanDoesntExistsException(null));
         GetUserDTO userDTO = new GetUserDTO(loanEntity.getUser().getId(), loanEntity.getUser().getUserName(),
                 loanEntity.getUser().getEmail());
         GetBookDTO bookDTO = new GetBookDTO(loanEntity.getBook().getBookId(), loanEntity.getBook().getISBN(),
@@ -76,7 +81,8 @@ public class LoanService extends IndentityService{
 
     public GetReturnLoanDTO returnLoan(ReturnLoanDTO returnLoanDTO){
 
-        LoanEntity loanEntity = loanRepository.findById(returnLoanDTO.getLoanId()).orElseThrow(RuntimeException::new);
+        LoanEntity loanEntity = loanRepository.findById(returnLoanDTO.getLoanId())
+                .orElseThrow(()-> new LoanDoesntExistsException(null));
         GetUserDTO userDTO = new GetUserDTO(loanEntity.getUser().getId(), loanEntity.getUser().getUserName(),
                 loanEntity.getUser().getEmail());
         GetBookDTO bookDTO = new GetBookDTO(loanEntity.getBook().getBookId(), loanEntity.getBook().getISBN(),

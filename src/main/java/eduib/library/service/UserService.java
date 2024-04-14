@@ -3,6 +3,7 @@ package eduib.library.service;
 import eduib.library.controller.DTO.GetUserDTO;
 import eduib.library.entity.AuthEntity;
 import eduib.library.entity.UserEntity;
+import eduib.library.errors.UserNameNotFound;
 import eduib.library.repositories.AuthRepository;
 import eduib.library.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class UserService {
     }
 
     public GetUserDTO getUserByUserName(String userName){
-        AuthEntity authEntity = authRepository.findByUserName(userName).orElseThrow(RuntimeException::new);
+        AuthEntity authEntity = authRepository.findByUserName(userName).orElseThrow(() -> new UserNameNotFound(null));
         UserEntity userEntity = authEntity.getUser();
         return new GetUserDTO(userEntity.getId(), userEntity.getUserName(), userEntity.getEmail());
     }
