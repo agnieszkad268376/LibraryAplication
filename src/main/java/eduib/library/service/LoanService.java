@@ -89,6 +89,13 @@ public class LoanService extends IndentityService{
 
     }
 
+    public List<GetLoanDTO> getUsersHistory(long userId){
+        List<LoanEntity> loanEntities = loanRepository.findByUserIdAndReturnDateIsNotNull(userId);
+
+        List<GetLoanDTO> loanHistory = loanEntities.stream().map(this::loanMap).collect(Collectors.toList());
+        return loanHistory;
+    }
+
     private GetLoanDTO loanMap(LoanEntity loanEntity){
         GetUserDTO userDTO = new GetUserDTO(loanEntity.getUser().getId(), loanEntity.getUser().getUserName(),
                 loanEntity.getUser().getEmail());

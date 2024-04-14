@@ -47,4 +47,10 @@ public class LoanController {
         var updatedLoan = loanService.returnLoan(returnLoanDTO);
         return updatedLoan;
     }
+
+    @GetMapping("/getUsersHistory/{userId}")
+    public ResponseEntity<List<GetLoanDTO>> getUsesrsHistory(@PathVariable long userId){
+        List<GetLoanDTO> history = loanService.getUsersHistory(userId);
+        return new ResponseEntity<>(history, HttpStatus.OK);
+    }
 }
