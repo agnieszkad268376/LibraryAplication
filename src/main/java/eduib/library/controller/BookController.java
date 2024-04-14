@@ -47,42 +47,42 @@ public class BookController {
     }
 
     @PreAuthorize("hasRole('LIBRARIAN')")
-    @PostMapping("/updateISBN/{bookId}/{newISBN}")
+    @PatchMapping("/updateISBN/{bookId}/{newISBN}")
     public GetBookDTO updateISBN(@PathVariable long bookId, @PathVariable String newISBN){
         bookService.updateISBN(bookId, newISBN);
         return bookService.getOne(bookId);
     }
 
     @PreAuthorize("hasRole('LIBRARIAN')")
-    @PostMapping("/updateTitle/{bookId}/{newTitle}")
+    @PatchMapping("/updateTitle/{bookId}/{newTitle}")
     public GetBookDTO updateTitle(@PathVariable long bookId, @PathVariable String newTitle){
         bookService.updateTitle(bookId, newTitle);
         return bookService.getOne(bookId);
     }
 
     @PreAuthorize("hasRole('LIBRARIAN')")
-    @PostMapping("/updateAuthor/{bookId}/{newAuthor}")
+    @PatchMapping("/updateAuthor/{bookId}/{newAuthor}")
     public GetBookDTO updateAuthor(@PathVariable long bookId, @PathVariable String newAuthor){
         bookService.updateAuthor(bookId, newAuthor);
         return bookService.getOne(bookId);
     }
 
     @PreAuthorize("hasRole('LIBRARIAN')")
-    @PostMapping("/updatePublisher/{bookId}/{newPublisher}")
+    @PatchMapping("/updatePublisher/{bookId}/{newPublisher}")
     public GetBookDTO updatePublisher(@PathVariable long bookId, @PathVariable String newPublisher){
         bookService.updatePublisher(bookId, newPublisher);
         return bookService.getOne(bookId);
     }
 
     @PreAuthorize("hasRole('LIBRARIAN')")
-    @PostMapping("/updatePublishYear/{bookId}/{newPublishYear}")
+    @PatchMapping("/updatePublishYear/{bookId}/{newPublishYear}")
     public GetBookDTO updatePublishYear(@PathVariable long bookId, @PathVariable int newPublishYear){
         bookService.updatePublishYear(bookId, newPublishYear);
         return bookService.getOne(bookId);
     }
 
     @PreAuthorize("hasRole('LIBRARIAN')")
-    @PostMapping("/updateAvailableCopies/{bookId}/{newAvailableCopies}")
+    @PatchMapping("/updateAvailableCopies/{bookId}/{newAvailableCopies}")
     public GetBookDTO updateAvailableCopies(@PathVariable long bookId, @PathVariable String newAvailableCopies){
         bookService.updateAvailableCopies(bookId, newAvailableCopies);
         return bookService.getOne(bookId);

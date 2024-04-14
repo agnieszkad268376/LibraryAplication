@@ -56,21 +56,21 @@ public class AuthController {
     }
 
     @PreAuthorize("hasRole('LIBRARIAN')")
-    @PostMapping("/updateUserName/{userId}/{newUserName}")
+    @PatchMapping("/updateUserName/{userId}/{newUserName}")
     public RegisterResponseDTO updateUserName(@PathVariable long userId, @PathVariable String newUserName){
         authService.updateUserName(userId, newUserName);
         return authService.showUser(userId);
     }
 
     @PreAuthorize("hasRole('LIBRARIAN')")
-    @PostMapping("/updateEmail/{userId}/{newEmail}")
+    @PatchMapping("/updateEmail/{userId}/{newEmail}")
     public ResponseEntity<Void> updateEmail(@PathVariable long userId, @PathVariable String newEmail){
         authService.updateEmail(userId, newEmail);
         return ResponseEntity.noContent().build();
     }
 
     @PreAuthorize("hasRole('LIBRARIAN')")
-    @PostMapping("/updateUserName/{userId}/{newPassword}")
+    @PatchMapping("/updateUserName/{userId}/{newPassword}")
     public ResponseEntity<Void> changePassword(@PathVariable long userId, @PathVariable String newPassword){
         authService.changePassword(userId, newPassword);
         return ResponseEntity.noContent().build();

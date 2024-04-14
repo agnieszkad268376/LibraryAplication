@@ -1,15 +1,15 @@
 package eduib.library.controller;
 
 
-import eduib.library.controller.DTO.AddLoanDTO;
-import eduib.library.controller.DTO.GetLoanDTO;
-import eduib.library.controller.DTO.LoanResponseDTO;
+import eduib.library.controller.DTO.*;
+import eduib.library.entity.LoanEntity;
 import eduib.library.service.LoanService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -35,19 +35,16 @@ public class LoanController {
         GetLoanDTO loanDTO = loanService.getById(id);
         return new ResponseEntity<>(loanDTO, HttpStatus.OK);
     }
-    @GetMapping("getByUserId/{user_id}")
-    public ResponseEntity<List<GetLoanDTO>> getByUserId(@PathVariable long userId){
-        return null;
-    }
-
-    @GetMapping("getByBookId/{book_id}")
-    public ResponseEntity<List<GetLoanDTO>> getByBookId(@PathVariable long bookId){
-        return null;
-    }
 
     @GetMapping("getAll")
     public ResponseEntity<List<GetLoanDTO>> getAll(@RequestParam(required = false) Long userId){
         List<GetLoanDTO> loansdto = loanService.getAll(userId);
         return new ResponseEntity<>(loansdto, HttpStatus.OK);
+    }
+
+    @PatchMapping("/returnLoan")
+    public GetReturnLoanDTO returnLoan(@RequestBody ReturnLoanDTO returnLoanDTO){
+        var updatedLoan = loanService.returnLoan(returnLoanDTO);
+        return updatedLoan;
     }
 }

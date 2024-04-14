@@ -74,6 +74,21 @@ public class LoanService extends IndentityService{
 
     }
 
+    public GetReturnLoanDTO returnLoan(ReturnLoanDTO returnLoanDTO){
+
+        LoanEntity loanEntity = loanRepository.findById(returnLoanDTO.getLoanId()).orElseThrow(RuntimeException::new);
+        GetUserDTO userDTO = new GetUserDTO(loanEntity.getUser().getId(), loanEntity.getUser().getUserName(),
+                loanEntity.getUser().getEmail());
+        GetBookDTO bookDTO = new GetBookDTO(loanEntity.getBook().getBookId(), loanEntity.getBook().getISBN(),
+                loanEntity.getBook().getTitle(), loanEntity.getBook().getAuthor(), loanEntity.getBook().getPublisher(),
+                loanEntity.getBook().getPublishYear(), loanEntity.getBook().getAvailableCopies());
+        loanEntity.setReturnDate(returnLoanDTO.getReturnDate());
+        var updatedLoan = loanRepository.save(loanEntity);
+        return new GetReturnLoanDTO(updatedLoan.getId(), updatedLoan.getLoanDate(), updatedLoan.getTerminDate(),
+                updatedLoan.getReturnDate(), userDTO, bookDTO);
+
+    }
+
     private GetLoanDTO loanMap(LoanEntity loanEntity){
         GetUserDTO userDTO = new GetUserDTO(loanEntity.getUser().getId(), loanEntity.getUser().getUserName(),
                 loanEntity.getUser().getEmail());
