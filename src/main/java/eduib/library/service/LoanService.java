@@ -49,6 +49,10 @@ public class LoanService extends IndentityService{
         loanEntity.setTerminDate(loanDTO.getTerminDate());
         loanRepository.save(loanEntity);
 
+        int copies = Integer.valueOf(book.getAvailableCopies()) - 1;
+        book.setAvailableCopies(String.valueOf(copies));
+        bookRepository.save(book);
+
         return new LoanResponseDTO(loanEntity.getId(), loanEntity.getLoanDate(), loanEntity.getTerminDate(),
                 loanEntity.getUser().getId(), loanEntity.getBook().getBookId());
     }
@@ -90,6 +94,11 @@ public class LoanService extends IndentityService{
                 loanEntity.getBook().getPublishYear(), loanEntity.getBook().getAvailableCopies());
         loanEntity.setReturnDate(returnLoanDTO.getReturnDate());
         var updatedLoan = loanRepository.save(loanEntity);
+
+        int copies = Integer.valueOf(loanEntity.getBook().getAvailableCopies()) + 1;
+        loanEntity.getBook().setAvailableCopies(String.valueOf(copies));
+        bookRepository.save(loanEntity.getBook());
+
         return new GetReturnLoanDTO(updatedLoan.getId(), updatedLoan.getLoanDate(), updatedLoan.getTerminDate(),
                 updatedLoan.getReturnDate(), userDTO, bookDTO);
 
