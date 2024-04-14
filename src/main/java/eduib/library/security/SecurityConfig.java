@@ -15,17 +15,30 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Security configuration.
+ */
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
 
     private final JWTAuthenticationFilter jwtAuthenticationFilter;
 
+    /**
+     * Constructs a SecurityConfig object
+     * @param jwtAuthenticationFilter Filter for JWT authentication.
+     */
     @Autowired
     public SecurityConfig(JWTAuthenticationFilter jwtAuthenticationFilter) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
+    /**
+     * Configures the security filter chain.
+     * @param http
+     * @return Security filter chain.
+     * @throws Exception If an error occurs during configuration.
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.csrf(AbstractHttpConfigurer::disable)
@@ -34,6 +47,10 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * Creates a BCrypt password
+     * @return BCryptPasswordEncoder bean.
+     */
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();

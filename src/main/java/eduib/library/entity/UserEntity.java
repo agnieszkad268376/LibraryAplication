@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
+/**
+ * Entity class representing Usser
+ */
 @Entity
 @Table(name = "users", schema = "libraryDataBase")
 public class UserEntity {

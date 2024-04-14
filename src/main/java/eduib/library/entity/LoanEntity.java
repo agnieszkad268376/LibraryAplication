@@ -3,6 +3,9 @@ package eduib.library.entity;
 import jakarta.persistence.*;
 import java.sql.Date;
 
+/**
+ * Entity class representing Loan
+ */
 @Entity
 @Table(name="loan", schema="library")
 public class LoanEntity {

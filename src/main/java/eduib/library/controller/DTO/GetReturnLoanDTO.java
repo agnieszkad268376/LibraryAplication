@@ -2,6 +2,10 @@ package eduib.library.controller.DTO;
 
 import java.sql.Date;
 
+/**
+ * Class represents a Data Transfer Object used for transferring data from database to java object.
+ * It for getting return loan from database
+ */
 public class GetReturnLoanDTO {
 
     private long id;
@@ -11,6 +15,15 @@ public class GetReturnLoanDTO {
     private GetUserDTO userId;
     private GetBookDTO bookId;
 
+    /**
+     * Contruscts a GetReurnLoanDTO object
+     * @param id id of the loan (long)
+     * @param loanDate date of the loan (Date)
+     * @param terminDate termin date of the loan (Date)
+     * @param returnDate return date of the loan (Date)
+     * @param userId loans user id (long)
+     * @param bookId loans user id (long)
+     */
     public GetReturnLoanDTO(long id, Date loanDate, Date terminDate, Date returnDate, GetUserDTO userId, GetBookDTO bookId) {
         this.id = id;
         this.loanDate = loanDate;

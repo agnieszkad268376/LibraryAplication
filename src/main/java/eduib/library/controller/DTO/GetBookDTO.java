@@ -1,5 +1,9 @@
 package eduib.library.controller.DTO;
 
+/**
+ * Class represents a Data Transfer Object used for transferring data from database to java object.
+ * It for getting book from database
+ */
 public class GetBookDTO {
 
     private long bookId;
@@ -10,6 +14,16 @@ public class GetBookDTO {
     private int publishYear;
     private String availableCopies;
 
+    /**
+     * Construct an GetBookDTO object
+     * @param bookId id of the book (long)
+     * @param ISBN isbn of the book (String)
+     * @param title title of the book (String)
+     * @param author author of the book (String)
+     * @param publisher publisher of the book (String)
+     * @param publishYear publish year of the book (int)
+     * @param availableCopies availables copies of the book (String)
+     */
     public GetBookDTO(long bookId, String ISBN, String title, String author, String publisher, int publishYear, String availableCopies) {
         this.bookId = bookId;
         this.ISBN = ISBN;

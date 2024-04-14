@@ -3,6 +3,10 @@ package eduib.library.entity;
 import eduib.library.commonTypes.UserRole;
 import jakarta.persistence.*;
 
+
+/**
+ * Entity class representing Auth
+ */
 @Entity
 @Table(name = "auth", schema = "libraryDataBase")
 public class AuthEntity {
@@ -26,6 +30,7 @@ public class AuthEntity {
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
+
 
     public long getId() {
         return id;
