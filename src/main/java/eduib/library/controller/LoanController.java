@@ -4,7 +4,6 @@ package eduib.library.controller;
 import eduib.library.controller.DTO.AddLoanDTO;
 import eduib.library.controller.DTO.GetLoanDTO;
 import eduib.library.controller.DTO.LoanResponseDTO;
-import eduib.library.entity.LoanEntity;
 import eduib.library.service.LoanService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,8 +44,8 @@ public class LoanController {
     }
 
     @GetMapping("getAll")
-    public ResponseEntity<List<GetLoanDTO>> getAll(){
-        List<GetLoanDTO> loansdto = loanService.getAll();
+    public ResponseEntity<List<GetLoanDTO>> getAll(@RequestParam(required = false) Long userId){
+        List<GetLoanDTO> loansdto = loanService.getAll(userId);
         return new ResponseEntity<>(loansdto, HttpStatus.OK);
     }
 }
