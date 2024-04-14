@@ -1,0 +1,9 @@
+eduib.library
+eduib.library.commonTypes
+eduib.library.controller
+eduib.library.controller.DTO
+eduib.library.entity
+eduib.library.errors
+eduib.library.repositories
+eduib.library.security
+eduib.library.service

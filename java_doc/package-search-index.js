@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"eduib.library"},{"l":"eduib.library.commonTypes"},{"l":"eduib.library.controller"},{"l":"eduib.library.controller.DTO"},{"l":"eduib.library.entity"},{"l":"eduib.library.errors"},{"l":"eduib.library.repositories"},{"l":"eduib.library.security"},{"l":"eduib.library.service"}];updateSearchResults();
