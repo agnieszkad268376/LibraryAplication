@@ -12,6 +12,15 @@ public class GetLoanDTO {
     private Date terminDate;
     private GetUserDTO userId;
     private GetBookDTO bookId;
+    private Date returnDate;
+
+    public Date getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(Date returnDate) {
+        this.returnDate = returnDate;
+    }
 
     /**
      * Contruct on GetLoanDTO object
@@ -21,12 +30,13 @@ public class GetLoanDTO {
      * @param userId loans user id (long)
      * @param bookId loans book id (long)
      */
-    public GetLoanDTO(long id, Date loanDate, Date terminDate, GetUserDTO userId, GetBookDTO bookId) {
+    public GetLoanDTO(long id, Date loanDate, Date terminDate, GetUserDTO userId, GetBookDTO bookId, Date returnDate) {
         this.id = id;
         this.loanDate = loanDate;
         this.terminDate = terminDate;
         this.userId = userId;
         this.bookId = bookId;
+        this.returnDate = returnDate;
     }
 
     public long getId() {

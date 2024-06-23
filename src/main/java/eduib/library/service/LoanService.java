@@ -88,7 +88,7 @@ public class LoanService extends IndentityService{
                 loanEntity.getBook().getTitle(), loanEntity.getBook().getAuthor(), loanEntity.getBook().getPublisher(),
                 loanEntity.getBook().getPublishYear(), loanEntity.getBook().getAvailableCopies());
 
-        return new GetLoanDTO(loanEntity.getId(), loanEntity.getLoanDate(), loanEntity.getTerminDate(), userDTO, bookDTO);
+        return new GetLoanDTO(loanEntity.getId(), loanEntity.getLoanDate(), loanEntity.getTerminDate(), userDTO, bookDTO, loanEntity.getReturnDate());
     }
 
     /**
@@ -96,7 +96,7 @@ public class LoanService extends IndentityService{
      * @param userId usersId (long)
      * @return List of loan.
      */
-    @PreAuthorize("hasRole('LIBRARIAN') or this.indentify(authentication.name, #userId)")
+    //@PreAuthorize("hasRole('LIBRARIAN') or this.indentify(authentication.name, #userId)")
     public List<GetLoanDTO> getAll(Long userId){
 
         List<LoanEntity> loanList = loanRepository.findAll();
@@ -155,6 +155,6 @@ public class LoanService extends IndentityService{
                 loanEntity.getBook().getTitle(), loanEntity.getBook().getAuthor(), loanEntity.getBook().getPublisher(),
                 loanEntity.getBook().getPublishYear(), loanEntity.getBook().getAvailableCopies());
 
-        return new GetLoanDTO(loanEntity.getId(), loanEntity.getLoanDate(), loanEntity.getTerminDate(), userDTO, bookDTO);
+        return new GetLoanDTO(loanEntity.getId(), loanEntity.getLoanDate(), loanEntity.getTerminDate(), userDTO, bookDTO, loanEntity.getReturnDate());
     }
 }

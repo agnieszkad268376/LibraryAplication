@@ -1,5 +1,6 @@
 package eduib.library.service;
 
+import eduib.library.commonTypes.UserRole;
 import eduib.library.controller.DTO.*;
 import eduib.library.entity.AuthEntity;
 import eduib.library.entity.UserEntity;
@@ -90,8 +91,9 @@ public class AuthService {
         }
 
         String token = jwtService.generateToken(authEntity);
+        UserRole role = jwtService.extractRole(token);
 
-        return new LoginResponseDTO(token);
+        return new LoginResponseDTO(token, role);
     }
 
     /**

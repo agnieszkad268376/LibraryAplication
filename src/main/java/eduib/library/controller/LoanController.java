@@ -68,6 +68,7 @@ public class LoanController {
      */
     @PatchMapping("/returnLoan")
     public GetReturnLoanDTO returnLoan(@RequestBody ReturnLoanDTO returnLoanDTO){
+
         var updatedLoan = loanService.returnLoan(returnLoanDTO);
         return updatedLoan;
     }
